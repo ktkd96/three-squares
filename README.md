@@ -4,7 +4,23 @@ Three short reads a day. Then get up.
 
 A small mobile web app (PWA) for the few minutes you're sitting down. It shows three curious, true, roughly two-minute pieces each day. There's no feed, no likes and no infinite scroll. When you've read all three, it tells you to get up and come back tomorrow.
 
-## Run it
+**Live:** https://ktkd96.github.io/three-squares/
+
+## Install on a phone
+
+Open the link, then:
+- **iPhone (Safari):** Share → Add to Home Screen
+- **Android (Chrome):** ⋮ menu → Add to Home screen / Install app
+
+## Publish changes
+
+Hosted on GitHub Pages from the `main` branch. Commit and push, and the site updates within a minute or two:
+
+```bash
+git push
+```
+
+## Run it locally
 
 ```bash
 python3 -m http.server 8765
