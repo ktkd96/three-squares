@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Three Squares</title>
+  <meta name="description" content="Three short reads a day. Then get up.">
+  <meta name="theme-color" content="#f6f1e7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1b1916" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="3 Squares">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="#/" class="brand" aria-label="Three Squares, today">
+      <span class="squares" aria-hidden="true"><i></i><i></i><i></i></span>
+      Three Squares
+    </a>
+    <span class="sit" id="sit" title="Time since you opened the app">0 min</span>
+  </header>
+
+  <div class="progress" id="progress" hidden><div id="progress-bar"></div></div>
+
+  <main id="app" tabindex="-1"></main>
+
+  <div class="nudge" id="nudge" role="status" hidden>
+    <p><strong>You've been sitting for a while.</strong> Doctors suggest keeping it under ten minutes. The reads will still be here later.</p>
+    <button type="button" id="nudge-ok">Okay, okay</button>
+  </div>
+
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
