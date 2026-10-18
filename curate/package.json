@@ -1,0 +1,16 @@
+{
+  "name": "three-squares-curate",
+  "private": true,
+  "type": "module",
+  "description": "Find, review and publish creator picks for Three Squares.",
+  "scripts": {
+    "discover": "node curate.mjs discover",
+    "verify": "node curate.mjs verify",
+    "review": "node curate.mjs review",
+    "publish": "node curate.mjs publish"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.135.0",
+    "zod": "^4.6.7"
+  }
+}

@@ -393,3 +393,84 @@ dialog li { margin-bottom: 6px; }
   .article h1 { font-size: 29px; }
   .prose { font-size: 19px; }
 }
+
+/* ---------- nav ---------- */
+
+.nav { display: flex; gap: 2px; margin-right: auto; }
+.nav a {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.nav a[aria-current="true"] { color: var(--ink); background: var(--line); }
+
+@media (max-width: 420px) {
+  .brand-name { display: none; }
+}
+
+/* ---------- picks ---------- */
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 24px; }
+.chips a {
+  font-size: 14px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--surface);
+}
+
+.pick-group { margin-bottom: 28px; scroll-margin-top: 70px; }
+.pick-group h2 {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 4px;
+}
+
+.pick {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 12px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  text-decoration: none;
+}
+.pick-name { font-family: var(--serif); font-size: 20px; font-weight: 600; line-height: 1.25; }
+.plat { font-size: 13px; color: var(--accent); white-space: nowrap; align-self: center; }
+.pick-note { grid-column: 1 / -1; color: var(--muted); font-size: 15px; }
+@media (hover: hover) { .pick:hover .pick-name { text-decoration: underline; text-underline-offset: 3px; } }
+
+.empty-picks { color: var(--muted); text-align: center; padding: 40px 0; }
+
+/* pick of the day, on the finished screen */
+.potd {
+  display: grid;
+  gap: 4px;
+  text-align: left;
+  margin: 8px 0 6px;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  text-decoration: none;
+}
+.potd-label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.potd-name { font-family: var(--serif); font-size: 21px; font-weight: 600; }
+.potd-name .plat { font-family: var(--sans); font-weight: 400; margin-left: 4px; }
+.potd-note { color: var(--muted); font-size: 15px; }
+.potd-more { margin: 0; font-size: 14px; text-align: left; }
+.potd-more a { color: var(--muted); text-underline-offset: 3px; }

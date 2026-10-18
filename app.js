@@ -7,6 +7,8 @@
   var NEW_SESSION_AFTER_MIN = 5; // away this long and the sit timer starts over
 
   var PIECES = window.PIECES || [];
+  var PICKS = (window.PICKS && window.PICKS.picks) || [];
+  var PLATFORM = { youtube: "YouTube", newsletter: "Newsletter", blog: "Blog", podcast: "Podcast", website: "Website", other: "Link" };
   var app = document.getElementById("app");
   var sitEl = document.getElementById("sit");
   var progress = document.getElementById("progress");
@@ -51,7 +53,7 @@
   }
 
   function todaysPieces() {
-    var n = Math.max(0, daysBetween(firstDay, dateKey()));
+    var n = dayNumber();
     var out = [];
     for (var i = 0; i < PER_DAY && i < PIECES.length; i++) {
       out.push(PIECES[(n * PER_DAY + i) % PIECES.length]);
@@ -150,6 +152,7 @@
       '<div class="big-squares" aria-hidden="true"><i></i><i></i><i></i></div>' +
       '<h1 class="headline">That\'s all three.</h1>' +
       '<p class="sub">Up you get. Wash your hands. New reads in <span class="countdown" id="countdown"></span>.</p>' +
+      pickOfTheDay() +
       '<div class="reread"><h3>Read again</h3>' +
       pieces.map(function (p) {
         return '<a href="#/read/' + p.id + '">' + esc(p.title) + "</a>";
@@ -169,6 +172,62 @@
     var timer = setInterval(tick, 1000);
     onLeave(function () { clearInterval(timer); });
   }
+
+  function dayNumber() { return Math.max(0, daysBetween(firstDay, dateKey())); }
+
+  function pickOfTheDay() {
+    if (!PICKS.length) return "";
+    var p = PICKS[dayNumber() % PICKS.length];
+    return '<a class="potd" href="' + esc(p.url) + '" target="_blank" rel="noopener">' +
+      '<span class="potd-label">While you\'re up, one worth following</span>' +
+      '<span class="potd-name">' + esc(p.name) + ' <span class="plat">' + esc(PLATFORM[p.platform] || "Link") + " ↗</span></span>" +
+      '<span class="potd-note">' + esc(p.note) + "</span></a>" +
+      '<p class="potd-more"><a href="#/picks">See all picks</a></p>';
+  }
+
+  function renderPicks() {
+    var cats = [];
+    PICKS.forEach(function (p) { if (cats.indexOf(p.category) === -1) cats.push(p.category); });
+    var updated = window.PICKS && window.PICKS.updated;
+
+    var head =
+      '<h1 class="headline">Picks</h1>' +
+      '<p class="sub">Creators worth your time, chosen by hand. No algorithm, no sponsors.' +
+      (updated ? " Updated " + esc(new Date(updated + "T12:00:00").toLocaleDateString(undefined, { month: "long", day: "numeric" })) + "." : "") +
+      "</p>";
+
+    if (!PICKS.length) {
+      app.innerHTML = head + '<p class="empty-picks">The first picks are on their way.</p>';
+      return;
+    }
+
+    app.innerHTML = head +
+      (cats.length > 1
+        ? '<nav class="chips" aria-label="Categories">' + cats.map(function (c) {
+            return '<a href="#cat-' + slug(c) + '">' + esc(c) + "</a>";
+          }).join("") + "</nav>"
+        : "") +
+      cats.map(function (c) {
+        return '<section class="pick-group" id="cat-' + slug(c) + '"><h2>' + esc(c) + "</h2>" +
+          PICKS.filter(function (p) { return p.category === c; }).map(function (p) {
+            return '<a class="pick" href="' + esc(p.url) + '" target="_blank" rel="noopener">' +
+              '<span class="pick-name">' + esc(p.name) + "</span>" +
+              '<span class="plat">' + esc(PLATFORM[p.platform] || "Link") + " ↗</span>" +
+              '<span class="pick-note">' + esc(p.note) + "</span></a>";
+          }).join("") + "</section>";
+      }).join("");
+
+    // In-page category links shouldn't trigger the hash router.
+    app.querySelectorAll(".chips a").forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        var el = document.getElementById(a.getAttribute("href").slice(1));
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  }
+
+  function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-"); }
 
   function renderReader(id) {
     var pieces = todaysPieces();
@@ -266,7 +325,12 @@
     var hash = location.hash || "#/";
     var m = hash.match(/^#\/read\/([\w-]+)$/);
     if (m) renderReader(m[1]);
+    else if (hash === "#/picks") renderPicks();
     else renderToday();
+    document.querySelectorAll(".nav a").forEach(function (a) {
+      a.setAttribute("aria-current", String(a.getAttribute("href") === (hash === "#/picks" ? "#/picks" : "#/")));
+    });
+    window.scrollTo(0, 0);
     updateSquares();
   }
 

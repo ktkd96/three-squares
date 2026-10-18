@@ -1,8 +1,8 @@
 // Offline support: try the network first so updates show up right away,
 // fall back to the cached copy when offline.
-var CACHE = "three-squares-v2";
+var CACHE = "three-squares-v3";
 var SHELL = [
-  "./", "index.html", "styles.css", "app.js", "content.js",
+  "./", "index.html", "styles.css", "app.js", "content.js", "picks.js",
   "manifest.webmanifest", "icons/icon.svg", "icons/icon-180.png"
 ];
 

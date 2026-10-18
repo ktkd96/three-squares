@@ -51,3 +51,35 @@ Add an object to the end of `window.PIECES` in `content.js`:
 ```
 
 Aim for 300–400 words. Keep the total a multiple of 3 so every day gets a full set.
+
+## Picks: curating creators
+
+The **Picks** tab recommends creators you've chosen by hand. The pipeline in `curate/` finds candidates, you review them, and only the ones you approve are published.
+
+One-time setup:
+
+```bash
+cd curate && npm install
+```
+
+1. **Find candidates.** A starter pool of about 95 is already loaded (`node seed.mjs`). To find more on a topic with Claude and web search (needs an `ANTHROPIC_API_KEY`):
+
+   ```bash
+   node curate.mjs discover "woodworking" 25
+   ```
+
+2. **Check links.** Flags dead links and sites that block automated checks:
+
+   ```bash
+   node curate.mjs verify
+   ```
+
+3. **Review.** Open http://localhost:8770, then approve, reject or "maybe" each one, set its category, and write the note readers will see. Keyboard: `A` approve, `M` maybe, `R` reject, `J`/`K` next/previous, `O` open link.
+
+   ```bash
+   node curate.mjs review
+   ```
+
+4. **Publish.** Click **Publish approved** in the review screen (or run `node curate.mjs publish`). That writes `picks.js`. Commit and push to put it online.
+
+Candidates and your decisions live in `curate/data/`, which is kept out of git, so rejected creators are never public. Only `picks.js` is published.

@@ -1,2 +1,4 @@
 .claude/
 .DS_Store
+curate/node_modules/
+curate/data/
